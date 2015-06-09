@@ -19,10 +19,10 @@ namespace Smart_radio_controller_console
         public static TimeSpan start = new TimeSpan(16, 0, 0);      // begin tijd voor radio
         public static TimeSpan eind = new TimeSpan(18, 0, 0);       // eind tijd voor radio
         public static float bewegingsmarge = 62;                    // marge voor bewegingsdetectie
-        public static string url = "http://192.168.1.50/stadslab";  // url van de HomeWizard
+        public static string url = "http://192.168.1.51/stadslab";  // url van de HomeWizard
         public static int wachttijd = 5000;                         // wachttijd tussen het loopen
-        public static Boolean maakFoto1 = false;                     // boolean om foto te maken
-        public static Boolean maakFoto2 = false;                     // boolean om foto te maken
+        public static Boolean maakFoto1 = false;                    // boolean om foto te maken
+        public static Boolean maakFoto2 = false;                    // boolean om foto te maken
         public static Bitmap first;
         public static Bitmap second;
         #endregion
@@ -171,10 +171,10 @@ namespace Smart_radio_controller_console
                 // bereken verschil tussen foto's
                 Console.Write("Bereken verschil...");
                 float percentage = berekenVerschil(first, second);
-                Console.WriteLine(" Done \n");
+                Console.WriteLine(" " + percentage.ToString("0.0") + " \n");
 
                 // bij hoge beweging EN binnen tijdspan blijf aan, anders ga uit.
-                if (percentage <= bewegingsmarge && checkTijd())
+                if (percentage >= bewegingsmarge && checkTijd())
                 {
                     // haal huidige status op
                     var json = new WebClient().DownloadString(url + "/swlist");
