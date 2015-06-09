@@ -420,6 +420,7 @@
             this.main_groeppic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.main_groeppic.TabIndex = 34;
             this.main_groeppic.TabStop = false;
+            this.main_groeppic.Click += new System.EventHandler(this.main_groeppic_Click);
             // 
             // main_verschil_label
             // 

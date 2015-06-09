@@ -14,3 +14,4 @@ E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\bin\Debu
 E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\bin\Debug\AForge.Video.DirectShow.xml
 E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\bin\Debug\AForge.xml
 E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart_radio_controller_windows_forms.main.resources
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart_radio_controller_windows_forms.About.resources

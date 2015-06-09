@@ -314,6 +314,7 @@ namespace Smart_radio_controller_windows_forms
             maakFoto2 = true;
 
             // start auto thread
+            thread = new Thread(new ThreadStart(constantCheck));
             thread.Start();  
         }
 
@@ -394,6 +395,12 @@ namespace Smart_radio_controller_windows_forms
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             radio_uit();
+        }
+
+        private void main_groeppic_Click(object sender, EventArgs e)
+        {
+            var about = new About();
+            about.Show();
         }
     }
 }
