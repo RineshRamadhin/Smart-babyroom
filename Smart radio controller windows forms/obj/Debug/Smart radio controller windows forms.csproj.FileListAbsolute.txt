@@ -1,0 +1,9 @@
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\bin\Debug\Smart radio controller windows forms.exe.config
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\bin\Debug\Smart radio controller windows forms.exe
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\bin\Debug\Smart radio controller windows forms.pdb
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart radio controller windows forms.csprojResolveAssemblyReference.cache
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart_radio_controller_windows_forms.Properties.Resources.resources
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart radio controller windows forms.csproj.GenerateResource.Cache
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart radio controller windows forms.exe
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart radio controller windows forms.pdb
+E:\Documents\GitHub\Smart-babyroom\Smart radio controller windows forms\obj\Debug\Smart_radio_controller_windows_forms.Form1.resources
