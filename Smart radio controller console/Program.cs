@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using AForge.Video;
+using AForge.Video.DirectShow;
 
 namespace Smart_radio_controller_console
 {
@@ -16,9 +18,13 @@ namespace Smart_radio_controller_console
         #region global variables
         public static TimeSpan start = new TimeSpan(16, 0, 0);      // begin tijd voor radio
         public static TimeSpan eind = new TimeSpan(18, 0, 0);       // eind tijd voor radio
-        public static float bewegingsmarge = 30;                    // marge voor bewegingsdetectie
+        public static float bewegingsmarge = 62;                    // marge voor bewegingsdetectie
         public static string url = "http://192.168.1.50/stadslab";  // url van de HomeWizard
         public static int wachttijd = 5000;                         // wachttijd tussen het loopen
+        public static Boolean maakFoto1 = false;                     // boolean om foto te maken
+        public static Boolean maakFoto2 = false;                     // boolean om foto te maken
+        public static Bitmap first;
+        public static Bitmap second;
         #endregion
 
         /// <summary>
@@ -37,6 +43,9 @@ namespace Smart_radio_controller_console
             Console.WriteLine("Hoelaat moet de radio uit [in uren]");
             int einduur = Convert.ToInt32(Console.ReadLine());
             eind = new TimeSpan(einduur, 37, 0);
+            Console.WriteLine("Hoeveel tijd tussen checks [in miliseconden]");
+            int tussentijd = Convert.ToInt32(Console.ReadLine());
+            wachttijd = tussentijd;
 
             // switch aanzetten
             Console.WriteLine("Starten...");
@@ -48,13 +57,42 @@ namespace Smart_radio_controller_console
             Thread.Sleep(500);
             Console.Clear();
 
+            // start cam event
+            FilterInfoCollection webcam;
+            webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            VideoCaptureDevice cam;
+            cam = new VideoCaptureDevice(webcam[0].MonikerString);
+            cam.NewFrame += cam_NewFrame;
+            cam.Start();
+
             //start check loop
             constantCheck();
 
             // finish
+            cam.NewFrame -= cam_NewFrame;
+            cam.Stop();
             Console.Clear();
             Console.WriteLine("Babyradio uitgezet op " + DateTime.Now.ToString() + "\n");
             Console.Read();
+        }
+
+        /// <summary>
+        /// event handler die een foto maakt wanneer maakFoto = true
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        static void cam_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            if (maakFoto1)
+            {
+                first = (Bitmap)eventArgs.Frame.Clone();              
+                maakFoto1 = false;
+            }
+            else if (maakFoto2)
+            {
+                second = (Bitmap)eventArgs.Frame.Clone();
+                maakFoto2 = false;
+            }
         }
 
         /// <summary>
@@ -95,17 +133,6 @@ namespace Smart_radio_controller_console
         }
 
         /// <summary>
-        /// maakt foto met de webcam en sla op als bitmap
-        /// </summary>
-        /// <returns>bitmap</returns>
-        static Bitmap maaktFoto()
-        {
-            // TODO: make a photo using the webcam and return it as an bitmap.
-            Bitmap first = new Bitmap("First.jpg");
-            return first;
-        }
-
-        /// <summary>
         /// check of tijd tussen twee tijden is
         /// </summary>
         /// <returns>true/false</returns>
@@ -136,9 +163,9 @@ namespace Smart_radio_controller_console
 
                 // maak foto's
                 Console.Write("Maakt foto's...");
-                Bitmap first = maaktFoto();
-                Thread.Sleep(500);                  // wachttijd tussen foto's maken
-                Bitmap second = maaktFoto();
+                maakFoto1 = true;
+                maakFoto2 = true;
+                Thread.Sleep(2000);
                 Console.WriteLine("     Done");
 
                 // bereken verschil tussen foto's
