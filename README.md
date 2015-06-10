@@ -6,8 +6,12 @@
 **Smart baby radio windows forms** is a windows program that manages the baby radio. This can be controlled by user input or automatically based on user defined timespans and movements captured by the webcam.
 
 #### Screenshot
-![Screenshot Smart baby radio console](https://rineshramadhin.files.wordpress.com/2015/06/smart-baby-radio_windows-forms.png "screenshot Smart baby radio console")
-![Screenshot Smart baby radio windows forms](https://rineshramadhin.files.wordpress.com/2015/06/smart-baby-radio_console.png "screenshot Smart baby radio windows forms")
+
+**Smart baby radio console**
+![Screenshot Smart baby radio console](https://rineshramadhin.files.wordpress.com/2015/06/smart-baby-radio_console.png "screenshot Smart baby radio console")
+
+**Smart baby radio windows forms**
+![Screenshot Smart baby radio windows forms](https://rineshramadhin.files.wordpress.com/2015/06/smart-baby-radio_windows-forms1.png "screenshot Smart baby radio windows forms")
 
 ## Download
 * [Latest](https://github.com/RineshRamadhin/Smart-babyroom/archive/master.zip)
