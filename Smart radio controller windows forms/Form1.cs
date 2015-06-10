@@ -13,6 +13,7 @@ using AForge.Video;
 using AForge.Video.DirectShow;
 using System.Net;
 using System.Threading;
+using System.Speech.Synthesis;
 
 namespace Smart_radio_controller_windows_forms
 {
@@ -28,7 +29,8 @@ namespace Smart_radio_controller_windows_forms
         public static Boolean maakFoto2 = false;                    // boolean om foto te maken
         public static Bitmap first;                                 // eerste foto
         public static Bitmap second;                                // tweede foto
-        public static Thread thread;
+        public static Thread thread;                                // thread voor auto check
+        public static SpeechSynthesizer synthesizer;                // spraakmeldingen
         #endregion
 
         /// <summary>
@@ -46,6 +48,9 @@ namespace Smart_radio_controller_windows_forms
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            //
+            synthesizer = new SpeechSynthesizer();
+
             // vul huidige waardes in
             main_starttijd_current.Text = start.ToString();
             main_eindtijd_current.Text = eind.ToString();
@@ -148,6 +153,7 @@ namespace Smart_radio_controller_windows_forms
         /// </summary>
         public void constantCheck()
         {
+            int count = 1;
             // loop constant
             while (true)
             {
@@ -156,6 +162,8 @@ namespace Smart_radio_controller_windows_forms
 
                 // stel laatste run in
                 main_laatsterun_time.Text = DateTime.Now.ToString();
+                main_laatsterun.Text = count + "e run:";
+                count = count + 1;
 
                 // maak foto's
                 maakFoto1 = true;
@@ -169,7 +177,10 @@ namespace Smart_radio_controller_windows_forms
                 // bij hoge beweging EN binnen tijdspan blijf aan, anders ga uit.
                 if (percentage >= bewegingsmarge && checkTijd())
                 {                    
-                    // zet switch No. 0 aan    
+                    // zet switch No. 0 aan 
+                    //WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
+                    //webRequest.Method = "GET";
+                    //WebResponse webResp = webRequest.GetResponse();
 
                     // current label
                     main_settings_current.Text = "Auto (AAN)";
@@ -181,6 +192,9 @@ namespace Smart_radio_controller_windows_forms
                 else
                 {                   
                     // zet switch No. 0 uit
+                    //WebRequest webRequest = WebRequest.Create(url + "/sw/0/off");
+                    //webRequest.Method = "GET";
+                    //WebResponse webResp = webRequest.GetResponse();
 
                     // current label
                     main_settings_current.Text = "Auto (UIT)";
@@ -206,6 +220,8 @@ namespace Smart_radio_controller_windows_forms
             try
             {
                 thread.Abort();
+                main_laatsterun.Text = "";
+                main_laatsterun_time.Text = "";
             }
             catch
             {
@@ -221,6 +237,7 @@ namespace Smart_radio_controller_windows_forms
             //WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
             //webRequest.Method = "GET";
             //WebResponse webResp = webRequest.GetResponse();
+            synthesizer.Speak("Radio aan");
 
             // current label
             main_settings_current.Text = "AAN";
@@ -238,7 +255,7 @@ namespace Smart_radio_controller_windows_forms
 
             // status
             main_status.BackColor = Color.Green;
-            main_status.Text = "Radio AAN";
+            main_status.Text = "Radio on";
         }
 
         /// <summary>
@@ -250,6 +267,8 @@ namespace Smart_radio_controller_windows_forms
             try
             {
                 thread.Abort();
+                main_laatsterun.Text = "";
+                main_laatsterun_time.Text = "";
             }
             catch
             {
@@ -261,9 +280,10 @@ namespace Smart_radio_controller_windows_forms
             main_mode_off.ForeColor = Color.White;
             main_mode_off.Enabled = false;
 
-            //WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
+            //WebRequest webRequest = WebRequest.Create(url + "/sw/0/off");
             //webRequest.Method = "GET";
             //WebResponse webResp = webRequest.GetResponse();
+            synthesizer.Speak("Radio off");
 
             // current label
             main_settings_current.Text = "UIT";

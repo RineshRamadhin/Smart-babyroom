@@ -43,6 +43,7 @@
             this.about_jw_nr = new System.Windows.Forms.Label();
             this.about_button = new System.Windows.Forms.Button();
             this.about_line = new System.Windows.Forms.Label();
+            this.about_version = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.about_groeppic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +74,7 @@
             this.about_subtitel.BackColor = System.Drawing.Color.Transparent;
             this.about_subtitel.Font = new System.Drawing.Font("Segoe UI Light", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.about_subtitel.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.about_subtitel.Location = new System.Drawing.Point(12, 153);
+            this.about_subtitel.Location = new System.Drawing.Point(12, 148);
             this.about_subtitel.Name = "about_subtitel";
             this.about_subtitel.Size = new System.Drawing.Size(137, 37);
             this.about_subtitel.TabIndex = 2;
@@ -85,9 +86,9 @@
             this.about_gemaakt.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.about_gemaakt.Location = new System.Drawing.Point(12, 228);
             this.about_gemaakt.Name = "about_gemaakt";
-            this.about_gemaakt.Size = new System.Drawing.Size(84, 13);
+            this.about_gemaakt.Size = new System.Drawing.Size(51, 13);
             this.about_gemaakt.TabIndex = 3;
-            this.about_gemaakt.Text = "Gemaakt door:";
+            this.about_gemaakt.Text = "Groep 3:";
             // 
             // about_rr
             // 
@@ -191,12 +192,23 @@
             this.about_line.Size = new System.Drawing.Size(304, 2);
             this.about_line.TabIndex = 13;
             // 
+            // about_version
+            // 
+            this.about_version.AutoSize = true;
+            this.about_version.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.about_version.Location = new System.Drawing.Point(19, 194);
+            this.about_version.Name = "about_version";
+            this.about_version.Size = new System.Drawing.Size(53, 13);
+            this.about_version.TabIndex = 14;
+            this.about_version.Text = "v1.0 Beta";
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(293, 417);
+            this.Controls.Add(this.about_version);
             this.Controls.Add(this.about_line);
             this.Controls.Add(this.about_button);
             this.Controls.Add(this.about_jw_nr);
@@ -237,5 +249,6 @@
         private System.Windows.Forms.Label about_jw_nr;
         private System.Windows.Forms.Button about_button;
         private System.Windows.Forms.Label about_line;
+        private System.Windows.Forms.Label about_version;
     }
 }
