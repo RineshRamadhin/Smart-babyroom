@@ -44,7 +44,9 @@
             this.about_button = new System.Windows.Forms.Button();
             this.about_line = new System.Windows.Forms.Label();
             this.about_version = new System.Windows.Forms.Label();
+            this.about_github = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.about_groeppic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.about_github)).BeginInit();
             this.SuspendLayout();
             // 
             // about_groeppic
@@ -196,11 +198,24 @@
             // 
             this.about_version.AutoSize = true;
             this.about_version.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.about_version.Location = new System.Drawing.Point(19, 194);
+            this.about_version.Location = new System.Drawing.Point(18, 194);
             this.about_version.Name = "about_version";
             this.about_version.Size = new System.Drawing.Size(53, 13);
             this.about_version.TabIndex = 14;
             this.about_version.Text = "v1.0 Beta";
+            // 
+            // about_github
+            // 
+            this.about_github.Image = ((System.Drawing.Image)(resources.GetObject("about_github.Image")));
+            this.about_github.Location = new System.Drawing.Point(15, 382);
+            this.about_github.Name = "about_github";
+            this.about_github.Size = new System.Drawing.Size(23, 23);
+            this.about_github.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.about_github.TabIndex = 15;
+            this.about_github.TabStop = false;
+            this.about_github.Click += new System.EventHandler(this.about_github_Click);
+            this.about_github.MouseEnter += new System.EventHandler(this.about_github_MouseEnter);
+            this.about_github.MouseLeave += new System.EventHandler(this.about_github_MouseLeave);
             // 
             // About
             // 
@@ -208,8 +223,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(293, 417);
+            this.Controls.Add(this.about_github);
             this.Controls.Add(this.about_version);
-            this.Controls.Add(this.about_line);
             this.Controls.Add(this.about_button);
             this.Controls.Add(this.about_jw_nr);
             this.Controls.Add(this.about_zb_nr);
@@ -223,11 +238,13 @@
             this.Controls.Add(this.about_subtitel);
             this.Controls.Add(this.about_titel);
             this.Controls.Add(this.about_groeppic);
+            this.Controls.Add(this.about_line);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "About";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Over ons";
             ((System.ComponentModel.ISupportInitialize)(this.about_groeppic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.about_github)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +267,6 @@
         private System.Windows.Forms.Button about_button;
         private System.Windows.Forms.Label about_line;
         private System.Windows.Forms.Label about_version;
+        private System.Windows.Forms.PictureBox about_github;
     }
 }

@@ -17,9 +17,29 @@ namespace Smart_radio_controller_windows_forms
             InitializeComponent();
         }
 
+        /// <summary>
+        /// sluit het venster
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void about_github_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/RineshRamadhin/Smart-babyroom");
+        }
+
+        private void about_github_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void about_github_MouseLeave(object sender, EventArgs e)
+        {
+
         }
     }
 }

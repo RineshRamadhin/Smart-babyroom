@@ -48,8 +48,9 @@ namespace Smart_radio_controller_windows_forms
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            //
+            // initialiseer globale waardes
             synthesizer = new SpeechSynthesizer();
+            thread = new Thread(new ThreadStart(constantCheck));
 
             // vul huidige waardes in
             main_starttijd_current.Text = start.ToString();
@@ -66,12 +67,10 @@ namespace Smart_radio_controller_windows_forms
             cam = new VideoCaptureDevice(webcam[0].MonikerString);
             cam.NewFrame += cam_NewFrame;
             cam.Start();
-
-            thread = new Thread(new ThreadStart(constantCheck));
         }
 
         /// <summary>
-        /// event handler die een foto maakt wanneer maakFoto = true
+        /// event handler die een foto maakt wanneer maakFoto(1/2) = true
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
@@ -212,7 +211,7 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// 
+        /// zet de radio aan
         /// </summary>
         public void radio_aan()
         {
@@ -259,7 +258,7 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// 
+        /// zet de radio uit
         /// </summary>
         public void radio_uit()
         {
@@ -306,7 +305,7 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// 
+        /// start de auto thread
         /// </summary>
         public void radio_auto()
         {
@@ -339,7 +338,7 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// 
+        /// stelt de starttijd in
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -353,7 +352,7 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// 
+        /// stelt de eindtijd in
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -367,7 +366,7 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// 
+        /// stelt de tussentijd in
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -377,38 +376,23 @@ namespace Smart_radio_controller_windows_forms
             main_tussentijd_current.Text = wachttijd.ToString() + " ms";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void main_mode_on_Click(object sender, EventArgs e)
         {
             radio_aan();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void main_mode_off_Click(object sender, EventArgs e)
         {
             radio_uit();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void main_mode_auto_Click(object sender, EventArgs e)
         {
             radio_auto();
         }
 
         /// <summary>
-        /// 
+        /// code dat wordt uitgevoerd voor het sluiten van het from
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -417,6 +401,11 @@ namespace Smart_radio_controller_windows_forms
             radio_uit();
         }
 
+        /// <summary>
+        /// code bij een klik op de foto
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void main_groeppic_Click(object sender, EventArgs e)
         {
             var about = new About();

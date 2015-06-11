@@ -65,6 +65,7 @@
             this.main_verschil_label = new System.Windows.Forms.Label();
             this.main_verschil_line = new System.Windows.Forms.Label();
             this.main_verschil = new System.Windows.Forms.Label();
+            this.main_groepnaam = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.main_foto1_picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_foto2_picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_tussentijd_picker)).BeginInit();
@@ -414,7 +415,7 @@
             // main_groeppic
             // 
             this.main_groeppic.Image = ((System.Drawing.Image)(resources.GetObject("main_groeppic.Image")));
-            this.main_groeppic.Location = new System.Drawing.Point(27, 347);
+            this.main_groeppic.Location = new System.Drawing.Point(27, 329);
             this.main_groeppic.Name = "main_groeppic";
             this.main_groeppic.Size = new System.Drawing.Size(166, 144);
             this.main_groeppic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -453,12 +454,24 @@
             this.main_verschil.Text = "0 %";
             this.main_verschil.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // main_groepnaam
+            // 
+            this.main_groepnaam.AutoSize = true;
+            this.main_groepnaam.Font = new System.Drawing.Font("Segoe UI Light", 10F);
+            this.main_groepnaam.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.main_groepnaam.Location = new System.Drawing.Point(84, 473);
+            this.main_groepnaam.Name = "main_groepnaam";
+            this.main_groepnaam.Size = new System.Drawing.Size(46, 19);
+            this.main_groepnaam.TabIndex = 38;
+            this.main_groepnaam.Text = "Groep";
+            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(853, 533);
+            this.Controls.Add(this.main_groepnaam);
             this.Controls.Add(this.main_verschil);
             this.Controls.Add(this.main_verschil_label);
             this.Controls.Add(this.main_verschil_line);
@@ -550,6 +563,7 @@
         private System.Windows.Forms.Label main_verschil_label;
         private System.Windows.Forms.Label main_verschil_line;
         private System.Windows.Forms.Label main_verschil;
+        private System.Windows.Forms.Label main_groepnaam;
     }
 }
 
