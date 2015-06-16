@@ -30,8 +30,11 @@ namespace Smart_radio_controller_windows_forms
         public static Boolean maakFoto2 = false;                    // boolean om foto te maken
         public static Bitmap first;                                 // eerste foto
         public static Bitmap second;                                // tweede foto
-        public static Thread thread;                                // thread voor auto check
+        public static Thread thread_auto;                           // thread voor auto check
+        public static Thread thread_radio_aan;                      // thread voor radio aan
+        public static Thread thread_radio_uit;                      // thread voor radio uit
         public static SpeechSynthesizer synthesizer;                // spraakmeldingen
+        public static Boolean check;                                // constante loop
         #endregion
 
         /// <summary>
@@ -51,7 +54,10 @@ namespace Smart_radio_controller_windows_forms
         {
             // initialiseer globale waardes
             synthesizer = new SpeechSynthesizer();
-            thread = new Thread(new ThreadStart(constantCheck));
+            thread_auto = new Thread(new ThreadStart(constantCheck));
+            thread_radio_aan = new Thread(new ThreadStart(radio_aan));
+            thread_radio_uit = new Thread(new ThreadStart(radio_uit));
+            check = false;
 
             // vul huidige waardes in
             main_starttijd_current.Text = start.ToString();
@@ -59,7 +65,7 @@ namespace Smart_radio_controller_windows_forms
             main_tussentijd_current.Text = wachttijd.ToString() + " ms";
 
             // zet de radio aan
-            radio_aan();
+            radio_aan_button();
 
             // start cam event
             FilterInfoCollection webcam;
@@ -153,9 +159,10 @@ namespace Smart_radio_controller_windows_forms
         /// </summary>
         public void constantCheck()
         {
+            check = true;
             int count = 1;
             // loop constant
-            while (true)
+            while (check)
             {
                 // voor de errors
                 TextBox.CheckForIllegalCrossThreadCalls = false;
@@ -177,23 +184,9 @@ namespace Smart_radio_controller_windows_forms
                 // bij hoge beweging EN binnen tijdspan blijf aan, anders ga uit.
                 if (percentage >= bewegingsmarge && checkTijd())
                 {
-                    // haal huidige status op
-                    var json = new WebClient().DownloadString(url + "/swlist");
-                    JObject o = JObject.Parse(json);
-                    String status = o["status"].ToString();
-
-                    // check of de switch al aan is
-                    if (status == "off")
-                    {
-                        // zet switch No. 0 aan
-                        WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
-                        webRequest.Method = "GET";
-                        WebResponse webResp = webRequest.GetResponse();
-                    }
-                    else
-                    {
-                        // hou switch No. 0 aan                     
-                    }
+                    // zet switch No. 0 aan
+                    thread_radio_aan = new Thread(new ThreadStart(radio_aan));
+                    thread_radio_aan.Start();
 
                     // current label
                     main_settings_current.Text = "Auto (AAN)";
@@ -204,24 +197,11 @@ namespace Smart_radio_controller_windows_forms
                 }
                 else
                 {
-                    // haal huidige status op
-                    var json = new WebClient().DownloadString(url + "/swlist");
-                    JObject o = JObject.Parse(json);
-                    String status = o["status"].ToString();
-
-                    // check of de switch al aan is
-                    if (status == "on")
-                    {
-                        // zet switch No. 0 aan
-                        WebRequest webRequest = WebRequest.Create(url + "/sw/0/off");
-                        webRequest.Method = "GET";
-                        WebResponse webResp = webRequest.GetResponse();
-                    }
-                    else
-                    {
-                        // hou switch No. 0 uit
-                    }
-
+                    
+                    // zet switch No. 0 uit
+                    thread_radio_uit = new Thread(new ThreadStart(radio_uit));
+                    thread_radio_uit.Start();
+                    
                     // current label
                     main_settings_current.Text = "Auto (UIT)";
 
@@ -238,14 +218,50 @@ namespace Smart_radio_controller_windows_forms
         }
 
         /// <summary>
-        /// zet de radio aan
+        /// thread die de radio aan zet
         /// </summary>
         public void radio_aan()
         {
+            //try
+            //{
+                WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
+                webRequest.Method = "GET";
+                WebResponse webResp = webRequest.GetResponse();
+            //}
+            //catch
+            //{
+
+            //}
+        }
+
+        /// <summary>
+        /// thread die de radio uit zet
+        /// </summary>
+        public void radio_uit()
+        {
+            //try
+            //{
+                WebRequest webRequest = WebRequest.Create(url + "/sw/0/off");
+                webRequest.Method = "GET";
+                WebResponse webResp = webRequest.GetResponse();
+            //}
+            //catch
+            //{
+
+            //}
+        }
+
+        /// <summary>
+        /// zet de radio aan
+        /// </summary>
+        public void radio_aan_button()
+        {
             // stop auto thread
+            check = false;
+
             try
             {
-                thread.Abort();
+                thread_auto.Abort();
                 main_laatsterun.Text = "";
                 main_laatsterun_time.Text = "";
             }
@@ -260,9 +276,8 @@ namespace Smart_radio_controller_windows_forms
             main_mode_on.Enabled = false;
 
             // zet radio aan
-            WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
-            webRequest.Method = "GET";
-            WebResponse webResp = webRequest.GetResponse();
+            thread_radio_aan = new Thread(new ThreadStart(radio_aan));
+            thread_radio_aan.Start();
             synthesizer.Speak("Radio aan");
 
             // current label
@@ -287,12 +302,14 @@ namespace Smart_radio_controller_windows_forms
         /// <summary>
         /// zet de radio uit
         /// </summary>
-        public void radio_uit()
+        public void radio_uit_button()
         {
             // stop auto thread
+            check = false;
+
             try
             {
-                thread.Abort();
+                thread_auto.Abort();
                 main_laatsterun.Text = "";
                 main_laatsterun_time.Text = "";
             }
@@ -306,9 +323,9 @@ namespace Smart_radio_controller_windows_forms
             main_mode_off.ForeColor = Color.White;
             main_mode_off.Enabled = false;
 
-            WebRequest webRequest = WebRequest.Create(url + "/sw/0/off");
-            webRequest.Method = "GET";
-            WebResponse webResp = webRequest.GetResponse();
+            // zet radio uit
+            thread_radio_uit = new Thread(new ThreadStart(radio_uit));
+            thread_radio_uit.Start();
             synthesizer.Speak("Radio off");
 
             // current label
@@ -360,8 +377,8 @@ namespace Smart_radio_controller_windows_forms
             maakFoto2 = true;
 
             // start auto thread
-            thread = new Thread(new ThreadStart(constantCheck));
-            thread.Start();  
+            thread_auto = new Thread(new ThreadStart(constantCheck));
+            thread_auto.Start();  
         }
 
         /// <summary>
@@ -405,12 +422,12 @@ namespace Smart_radio_controller_windows_forms
 
         private void main_mode_on_Click(object sender, EventArgs e)
         {
-            radio_aan();
+            radio_aan_button();
         }
 
         private void main_mode_off_Click(object sender, EventArgs e)
         {
-            radio_uit();
+            radio_uit_button();
         }
 
         private void main_mode_auto_Click(object sender, EventArgs e)

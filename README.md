@@ -25,6 +25,8 @@
 
 ### Contributors on GitHub
 * [Rinesh Ramadhin](https://github.com/rineshramadhin)
+* [Sean van der Burg](https://github.com/seanvanderburg)
+* [Zahay Boukich](https://github.com/ZBoukich)
 
 ## License 
 * see [LICENSE](https://github.com/RineshRamadhin/Smart-babyroom/blob/master/LICENSE.md) file
