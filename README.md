@@ -32,7 +32,7 @@
 * see [LICENSE](https://github.com/RineshRamadhin/Smart-babyroom/blob/master/LICENSE.md) file
 
 ## Version 
-* v1.1
+* v1.2
 
 ## Contact
 #### Developer/Company
