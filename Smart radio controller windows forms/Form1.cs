@@ -14,6 +14,7 @@ using AForge.Video.DirectShow;
 using System.Net;
 using System.Threading;
 using System.Speech.Synthesis;
+using WMPLib;
 
 namespace Smart_radio_controller_windows_forms
 {
@@ -26,15 +27,19 @@ namespace Smart_radio_controller_windows_forms
         public static TimeSpan start = new TimeSpan(16, 0, 0);      // begin tijd voor radio
         public static TimeSpan eind = new TimeSpan(18, 0, 0);       // eind tijd voor radio
         public static int wachttijd = 5000;                         // wachttijd tussen het loopen
+        public static int oude_geluidsniveau;                       // oude geluidsniveau
         public static Boolean maakFoto1 = false;                    // boolean om foto te maken
         public static Boolean maakFoto2 = false;                    // boolean om foto te maken
+        public static Boolean check;                                // constante loop
+        public static Boolean status;                               // radio status
+        public static Boolean gedempt;                              // geluid gedempt
         public static Bitmap first;                                 // eerste foto
         public static Bitmap second;                                // tweede foto
         public static Thread thread_auto;                           // thread voor auto check
         public static Thread thread_radio_aan;                      // thread voor radio aan
         public static Thread thread_radio_uit;                      // thread voor radio uit
-        public static SpeechSynthesizer synthesizer;                // spraakmeldingen
-        public static Boolean check;                                // constante loop
+        public static WMPLib.WindowsMediaPlayer wplayer;            // musicplayer
+
         #endregion
 
         /// <summary>
@@ -53,16 +58,24 @@ namespace Smart_radio_controller_windows_forms
         private void Form1_Load(object sender, EventArgs e)
         {
             // initialiseer globale waardes
-            synthesizer = new SpeechSynthesizer();
             thread_auto = new Thread(new ThreadStart(constantCheck));
             thread_radio_aan = new Thread(new ThreadStart(radio_aan));
             thread_radio_uit = new Thread(new ThreadStart(radio_uit));
             check = false;
+            gedempt = false;
+            wplayer = new WMPLib.WindowsMediaPlayer();
+            wplayer.URL = "radio/538.m3u";
+
 
             // vul huidige waardes in
             main_starttijd_current.Text = start.ToString();
             main_eindtijd_current.Text = eind.ToString();
             main_tussentijd_current.Text = wachttijd.ToString() + " ms";
+
+            // vul radio picker
+            vul_radio();
+            main_radio_picker.SelectedIndex = main_radio_picker.FindStringExact("Radio 538");
+            main_radio_volume_label.Text = "Volume (" + wplayer.settings.volume + ")";
 
             // zet de radio aan
             radio_aan_button();
@@ -222,16 +235,8 @@ namespace Smart_radio_controller_windows_forms
         /// </summary>
         public void radio_aan()
         {
-            //try
-            //{
-                WebRequest webRequest = WebRequest.Create(url + "/sw/0/on");
-                webRequest.Method = "GET";
-                WebResponse webResp = webRequest.GetResponse();
-            //}
-            //catch
-            //{
-
-            //}
+            wplayer.controls.play();
+            status = true;
         }
 
         /// <summary>
@@ -239,16 +244,8 @@ namespace Smart_radio_controller_windows_forms
         /// </summary>
         public void radio_uit()
         {
-            //try
-            //{
-                WebRequest webRequest = WebRequest.Create(url + "/sw/0/off");
-                webRequest.Method = "GET";
-                WebResponse webResp = webRequest.GetResponse();
-            //}
-            //catch
-            //{
-
-            //}
+            wplayer.controls.stop();
+            status = false;
         }
 
         /// <summary>
@@ -278,7 +275,6 @@ namespace Smart_radio_controller_windows_forms
             // zet radio aan
             thread_radio_aan = new Thread(new ThreadStart(radio_aan));
             thread_radio_aan.Start();
-            synthesizer.Speak("Radio aan");
 
             // current label
             main_settings_current.Text = "AAN";
@@ -326,7 +322,6 @@ namespace Smart_radio_controller_windows_forms
             // zet radio uit
             thread_radio_uit = new Thread(new ThreadStart(radio_uit));
             thread_radio_uit.Start();
-            synthesizer.Speak("Radio off");
 
             // current label
             main_settings_current.Text = "UIT";
@@ -379,6 +374,19 @@ namespace Smart_radio_controller_windows_forms
             // start auto thread
             thread_auto = new Thread(new ThreadStart(constantCheck));
             thread_auto.Start();  
+        }
+
+        public void vul_radio()
+        {
+            main_radio_picker.Items.Add("Radio 538");
+            main_radio_picker.Items.Add("Qmusic");
+            main_radio_picker.Items.Add("SLAM!FM");
+            main_radio_picker.Items.Add("3FM");
+            main_radio_picker.Items.Add("FunX - NL");
+            main_radio_picker.Items.Add("FunX - Arab");
+            main_radio_picker.Items.Add("FunX - Reggae");
+            main_radio_picker.Items.Add("FunX - Dance");
+            main_radio_picker.Items.Add("FunX - Slowjamz");
         }
 
         /// <summary>
@@ -454,6 +462,142 @@ namespace Smart_radio_controller_windows_forms
         {
             var about = new About();
             about.Show();
+        }
+
+        /// <summary>
+        /// code bij verandering radio picker
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void main_radio_picker_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            wplayer.controls.stop();
+
+            switch (main_radio_picker.Text)
+            {
+                case "538":
+                    wplayer.URL = "radio/538.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "Qmusic":
+                    wplayer.URL = "radio/Qmusic.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "SLAM!FM":
+                    wplayer.URL = "radio/SlamFM.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "3FM":
+                    wplayer.URL = "radio/3FM.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "FunX - NL":
+                    wplayer.URL = "radio/FunX - NL.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "FunX - Arab":
+                    wplayer.URL = "radio/FunX - Arab.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "FunX - Reggae":
+                    wplayer.URL = "radio/FunX - Reggae.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "FunX - Dance":
+                    wplayer.URL = "radio/FunX - Dance.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+                case "FunX - Slowjamz":
+                    wplayer.URL = "radio/FunX - Slowjamz.m3u";
+                    wplayer.controls.stop();
+                    if (status)
+                    {
+                        wplayer.controls.play();
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// geluid omhoog van de mediaspeler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void main_radio_volume_down_Click(object sender, EventArgs e)
+        {
+            if (wplayer.settings.volume > 10)
+            {
+                wplayer.settings.volume = (wplayer.settings.volume - 10);
+                main_radio_volume_label.Text = "Volume (" + wplayer.settings.volume + ")";
+            }
+        }
+
+        /// <summary>
+        /// geluid omlaag van de mediaspeler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void main_radio_volume_up_Click(object sender, EventArgs e)
+        {
+            if (wplayer.settings.volume < 90)
+            {
+                wplayer.settings.volume = (wplayer.settings.volume + 10);
+                main_radio_volume_label.Text = "Volume (" + wplayer.settings.volume + ")";
+            }
+        }
+
+        /// <summary>
+        /// mute het geluid van de mediaspeler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void main_radio_volume_mute_Click(object sender, EventArgs e)
+        {
+            if (!gedempt)
+            {
+                oude_geluidsniveau = wplayer.settings.volume;
+                wplayer.settings.volume = 0;
+                main_radio_volume_label.Text = "Volume (" + wplayer.settings.volume + ")";
+                gedempt = true;
+            }
+            else
+            {
+                wplayer.settings.volume = oude_geluidsniveau;
+                main_radio_volume_label.Text = "Volume (" + wplayer.settings.volume + ")";
+                gedempt = false;
+            }
         }
     }
 }

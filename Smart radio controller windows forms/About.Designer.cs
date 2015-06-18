@@ -202,7 +202,7 @@
             this.about_version.Name = "about_version";
             this.about_version.Size = new System.Drawing.Size(53, 13);
             this.about_version.TabIndex = 14;
-            this.about_version.Text = "v1.0 Beta";
+            this.about_version.Text = "v1.1 Beta";
             // 
             // about_github
             // 

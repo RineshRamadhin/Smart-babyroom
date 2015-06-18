@@ -66,10 +66,20 @@
             this.main_verschil_line = new System.Windows.Forms.Label();
             this.main_verschil = new System.Windows.Forms.Label();
             this.main_groepnaam = new System.Windows.Forms.Label();
+            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            this.main_radio_picker = new System.Windows.Forms.ComboBox();
+            this.main_radio_volume_down = new System.Windows.Forms.Button();
+            this.main_radio_volume_up = new System.Windows.Forms.Button();
+            this.main_radio_volume_label = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.main_radio_line = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.main_radio_volume_mute = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_foto1_picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_foto2_picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_tussentijd_picker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_groeppic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
             // main_title
@@ -310,9 +320,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.main_laatsterun_time.Font = new System.Drawing.Font("Segoe UI Light", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main_laatsterun_time.ForeColor = System.Drawing.SystemColors.Control;
-            this.main_laatsterun_time.Location = new System.Drawing.Point(535, 57);
+            this.main_laatsterun_time.Location = new System.Drawing.Point(698, 57);
             this.main_laatsterun_time.Name = "main_laatsterun_time";
-            this.main_laatsterun_time.Size = new System.Drawing.Size(292, 37);
+            this.main_laatsterun_time.Size = new System.Drawing.Size(129, 68);
             this.main_laatsterun_time.TabIndex = 24;
             this.main_laatsterun_time.Text = "nooit";
             this.main_laatsterun_time.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -465,12 +475,112 @@
             this.main_groepnaam.TabIndex = 38;
             this.main_groepnaam.Text = "Groep";
             // 
+            // axWindowsMediaPlayer1
+            // 
+            this.axWindowsMediaPlayer1.Enabled = true;
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(183, 96);
+            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(10, 10);
+            this.axWindowsMediaPlayer1.TabIndex = 39;
+            this.axWindowsMediaPlayer1.Visible = false;
+            // 
+            // main_radio_picker
+            // 
+            this.main_radio_picker.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.main_radio_picker.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.main_radio_picker.FormattingEnabled = true;
+            this.main_radio_picker.Location = new System.Drawing.Point(235, 84);
+            this.main_radio_picker.Name = "main_radio_picker";
+            this.main_radio_picker.Size = new System.Drawing.Size(279, 21);
+            this.main_radio_picker.TabIndex = 40;
+            this.main_radio_picker.SelectionChangeCommitted += new System.EventHandler(this.main_radio_picker_SelectionChangeCommitted);
+            // 
+            // main_radio_volume_down
+            // 
+            this.main_radio_volume_down.Location = new System.Drawing.Point(535, 84);
+            this.main_radio_volume_down.Name = "main_radio_volume_down";
+            this.main_radio_volume_down.Size = new System.Drawing.Size(36, 21);
+            this.main_radio_volume_down.TabIndex = 42;
+            this.main_radio_volume_down.Text = "-";
+            this.main_radio_volume_down.UseVisualStyleBackColor = true;
+            this.main_radio_volume_down.Click += new System.EventHandler(this.main_radio_volume_down_Click);
+            // 
+            // main_radio_volume_up
+            // 
+            this.main_radio_volume_up.Location = new System.Drawing.Point(629, 84);
+            this.main_radio_volume_up.Name = "main_radio_volume_up";
+            this.main_radio_volume_up.Size = new System.Drawing.Size(35, 21);
+            this.main_radio_volume_up.TabIndex = 43;
+            this.main_radio_volume_up.Text = "+";
+            this.main_radio_volume_up.UseVisualStyleBackColor = true;
+            this.main_radio_volume_up.Click += new System.EventHandler(this.main_radio_volume_up_Click);
+            // 
+            // main_radio_volume_label
+            // 
+            this.main_radio_volume_label.AutoSize = true;
+            this.main_radio_volume_label.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.main_radio_volume_label.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.main_radio_volume_label.Location = new System.Drawing.Point(567, 57);
+            this.main_radio_volume_label.Name = "main_radio_volume_label";
+            this.main_radio_volume_label.Size = new System.Drawing.Size(67, 13);
+            this.main_radio_volume_label.TabIndex = 44;
+            this.main_radio_volume_label.Text = "Volume (10)";
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label2.Location = new System.Drawing.Point(538, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(128, 13);
+            this.label2.TabIndex = 47;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // main_radio_line
+            // 
+            this.main_radio_line.AutoSize = true;
+            this.main_radio_line.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.main_radio_line.Location = new System.Drawing.Point(232, 57);
+            this.main_radio_line.Name = "main_radio_line";
+            this.main_radio_line.Size = new System.Drawing.Size(37, 13);
+            this.main_radio_line.TabIndex = 46;
+            this.main_radio_line.Text = "Radio";
+            // 
+            // label4
+            // 
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label4.Location = new System.Drawing.Point(235, 79);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(429, 2);
+            this.label4.TabIndex = 45;
+            // 
+            // main_radio_volume_mute
+            // 
+            this.main_radio_volume_mute.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.main_radio_volume_mute.Location = new System.Drawing.Point(577, 84);
+            this.main_radio_volume_mute.Name = "main_radio_volume_mute";
+            this.main_radio_volume_mute.Size = new System.Drawing.Size(46, 21);
+            this.main_radio_volume_mute.TabIndex = 48;
+            this.main_radio_volume_mute.Text = "dempen";
+            this.main_radio_volume_mute.UseVisualStyleBackColor = true;
+            this.main_radio_volume_mute.Click += new System.EventHandler(this.main_radio_volume_mute_Click);
+            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(853, 533);
+            this.Controls.Add(this.main_radio_volume_mute);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.main_radio_line);
+            this.Controls.Add(this.main_radio_volume_label);
+            this.Controls.Add(this.main_radio_volume_up);
+            this.Controls.Add(this.main_radio_volume_down);
+            this.Controls.Add(this.main_radio_picker);
+            this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.main_groepnaam);
             this.Controls.Add(this.main_verschil);
             this.Controls.Add(this.main_verschil_label);
@@ -520,6 +630,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.main_foto2_picture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_tussentijd_picker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.main_groeppic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -564,6 +675,15 @@
         private System.Windows.Forms.Label main_verschil_line;
         private System.Windows.Forms.Label main_verschil;
         private System.Windows.Forms.Label main_groepnaam;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        private System.Windows.Forms.ComboBox main_radio_picker;
+        private System.Windows.Forms.Button main_radio_volume_down;
+        private System.Windows.Forms.Button main_radio_volume_up;
+        private System.Windows.Forms.Label main_radio_volume_label;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label main_radio_line;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button main_radio_volume_mute;
     }
 }
 
